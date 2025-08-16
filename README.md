@@ -11,4 +11,6 @@ features:
 - media upload
 - express server to save entries/users
 
+to contribute, clone repo, run 'npm install', run 'npm run dev' to start app
+
 created by megan barber using vite + react js
