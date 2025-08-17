@@ -1,46 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from './PostForm.module.css';
 
 const PostForm = (props) => {
-    const [post, setPost] = useState({
+    const [postData, setPostData] = useState({
         title: "",
         content: "",
         mood: "",
         date: new Date().toISOString().split("T")[0],
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setPost((prevPost) => ({
-            ...prevPost,
-            [name]: value,
-        }));
-    }
+    const handleChange = (evt) => {
+        setPostData({ ...postData, [evt.target.name]: evt.target.value });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.handleSubmit(e, post);
-        setPost({
-            title: "",
-            content: "",
-            date: new Date().toISOString().split("T")[0],
-        });
+        props.handleAddPost(postData);
     }
     
     return (
         <main className={styles.container}>
-        <form onSubmit={(e) => props.handleSubmit(e, post)}>
+        <form onSubmit={handleSubmit}>
         <input
             type="text"
             name="title"
-            value={post.title}
+            value={postData.title}
             onChange={handleChange}
             placeholder="title"
             required
         />
         <textarea
             name="content"
-            value={post.content}
+            value={postData.content}
             onChange={handleChange}
             placeholder="content"
             required
@@ -48,14 +39,15 @@ const PostForm = (props) => {
         <input
             type="date"
             name="date"
-            value={post.date}
+            value={postData.date}
             onChange={handleChange}
         />
         <input
             type="mood"
             name="mood"
-            value={post.mood}
+            value={postData.mood}
             onChange={handleChange}
+            placeholder="mood"
         />
         <button type="submit">Save</button>
         </form>
